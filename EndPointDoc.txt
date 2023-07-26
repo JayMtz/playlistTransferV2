@@ -1,0 +1,88 @@
+USER TABLE
+    //Call to create a new user
+        POST
+        http://localhost:3000/users/createuser/NEW_USER_EMAIL
+
+    //Add a Spotify Id to a user
+        PUT
+        http://localhost:3000/users/USER_EMAIL/addSpotifyId/SPOTIFY_ID
+
+    //Add a Apple Music Id to a user 
+        PUT
+        http://localhost:3000/users/USER_EMAIL/addAppleMusicId/APPLE_MUSIC_ID
+
+    //Return all users
+        GET
+        http://localhost:3000/users/returnAllUsers
+        (returns a Arry of JSON objects) ex:
+            [
+                {
+                    "email": "jxspell@hotmail.com",
+                    "spotifyId": "jayerds",
+                    "appleMusicId": null
+                },
+                {
+                    "email": "thuy@gmail.com",
+                    "spotifyId": "Thuuuy",
+                    "appleMusicId": null
+                }
+            ]
+
+    //Delete a user
+        DELETE
+        http://localhost:3000/users/USER_EMAIL
+
+SPOTIFY SONGS TABLE
+
+    //Add Spotify Song(s) to a user
+        POST
+        http://localhost:3000/spotifySongs/addSpotifySongs/USER_EMAIL
+        (accepts a array of JSON Objects) ex:
+            [
+                {
+                    "spotifySongName": "The Middle",
+                    "spotifySongArtist": "Jimmy Eat World"
+                },
+                {
+                    "spotifySongName": "Ohio Is for Lovers",
+                    "spotifySongArtist": "Hawthorne Heights"
+                }
+            ]
+
+ 
+    //Delete all Spotify Songs for a User
+        DELETE
+        http://localhost:3000/spotifySongs/deleteSpotifySongs/USER_EMAIL
+
+    //Get Spotify Songs for a User
+
+        GET
+        http://localhost:3000/spotifySongs/getSpotifySongs/USER_EMAIL
+        (returns a arry of JSON object) ex
+            [
+                {
+                    "spotifySongName": "Ohio Is for Lovers",
+                    "spotifySongArtist": "Hawthorne Heights"
+                },
+                {
+                    "spotifySongName": "The Middle",
+                    "spotifySongArtist": "Jimmy Eat World"
+                }
+            ]
+
+
+APPLE MUSIC SONGS TABLE
+    //Add Apple Music Song(s) for a User
+        @POST
+        http://localhost:3000/appleMusicSongs/addAppleSongs/USER_EMAIL
+        (accepts array of JSON objects) ex:
+            [
+                {
+                    "appleMusicSongName": "Ohio Is for Lovers",
+                    "appleMusicSongArtist": "Hawthorne Heights"
+                },
+                {
+                    "appleMusicSongName": "The Middle",
+                    "appleMusicSongArtist": "Jimmy Eat World"
+                }
+            ]
