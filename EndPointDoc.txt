@@ -86,3 +86,7 @@ APPLE MUSIC SONGS TABLE
                     "appleMusicSongArtist": "Jimmy Eat World"
                 }
             ]
+    //Delete Apple Music Song(s) for a User
+        @DELETE
+        http://localhost:3000/appleMusicSongs/deleteAppleSongs/USER_EMAIL
+        

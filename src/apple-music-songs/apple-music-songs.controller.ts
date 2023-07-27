@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { AppleMusicSongsService } from './apple-music-songs.service';
 
 @Controller('appleMusicSongs')
@@ -12,6 +12,12 @@ export class AppleMusicSongsController {
     {
         const appleMusicId = await this.AppleMusicSongsService.getAppleMusicId(id);
         return this.AppleMusicSongsService.addAppleMusicSongs(appleMusicId, songs);
+    }
+
+    @Delete('deleteAppleSongs/:id')
+    async deleteSongs(@Param('id') id: string): Promise <any>{
+        const appleMusicId = await this.AppleMusicSongsService.getAppleMusicId(id)
+        return this.AppleMusicSongsService.deleteAppleSongs(appleMusicId);
     }
 }
 
