@@ -52,5 +52,13 @@ export class AppleMusicSongsService {
     return result;
   }
 
+  async getAppleSongs(appleMusicId){
+    const connect = await this.pool.getConnection();
+    const query = 'SELECT appleMusicSongName, appleMusicSongArtist FROM appleMusicSongs WHERE appleMusicId = ?'
+    const [result] = await connect.query(query, appleMusicId);
+    connect.release();
+    return result;
+  }
+
 
 }

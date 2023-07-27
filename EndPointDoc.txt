@@ -89,4 +89,18 @@ APPLE MUSIC SONGS TABLE
     //Delete Apple Music Song(s) for a User
         @DELETE
         http://localhost:3000/appleMusicSongs/deleteAppleSongs/USER_EMAIL
-        
+
+    //Get Apple Music Song(s) for a User
+        @Get
+        http://localhost:3000/appleMusicSongs/getAppleSongs/USER_EMAIL
+        (Returns a array of JSON objects) ex:
+             [
+                {
+                    "appleMusicSongName": "Ohio Is for Lovers",
+                    "appleMusicSongArtist": "Hawthorne Heights"
+                },
+                {
+                    "appleMusicSongName": "The Middle",
+                    "appleMusicSongArtist": "Jimmy Eat World"
+                }
+            ]
