@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SpotifyWebApiService } from 'src/spotify-web-api/spotify-web-api.service';
+import { SpotifySongsService } from 'src/spotify-songs/spotify-songs.service';
 
 
 
@@ -8,13 +9,22 @@ import { SpotifyWebApiService } from 'src/spotify-web-api/spotify-web-api.servic
 export class UsersController {
     //userService: any;
     constructor(private readonly userService: UsersService,
-                private readonly spotifyWebApi: SpotifyWebApiService
+                private readonly spotifyWebApi: SpotifyWebApiService,
+                private readonly spotifySongsService: SpotifySongsService
                 ) {}
                 
     @Post('createuser/:id')
     createUser(@Param('id') id: string) {
         console.log("The users Controller accepted id " + id);
         return this.userService.createUser(id);
+    }
+
+    @Post (`:email/createPlaylist`)
+    async createPlaylist( @Body() spotifyAuthToken: any, @Param('email') email: string ){
+        const authToken = spotifyAuthToken.token;
+        const spotifyId = await this.spotifySongsService.getSpotifyId(email)
+        return this.spotifyWebApi.createPlaylist(authToken, spotifyId)
+
     }
 
     @Put(':id/addSpotifyId')

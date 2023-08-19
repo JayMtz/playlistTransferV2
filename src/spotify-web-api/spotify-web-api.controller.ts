@@ -16,5 +16,10 @@ export class SpotifyWebApiController {
         const spotifyId = await this.spotifyWebApiService.getSpotifyId(authToken)
     }
 
+    @Post("/createPlaylist")
+    async createPlaylist( @Body() spotifyAuthToken: any): Promise<any>{
+        const authToken = spotifyAuthToken.token
+        return {message: `creating playlist with auth token ${authToken}`}
+    }
+
 }
-// constructor(private readonly SpotifySongsService: SpotifySongsService) {}
