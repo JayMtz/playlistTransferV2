@@ -7,19 +7,20 @@ import { SpotifySongsService } from 'src/spotify-songs/spotify-songs.service';
 
 @Controller('users')
 export class UsersController {
-    //userService: any;
     constructor(private readonly userService: UsersService,
                 private readonly spotifyWebApi: SpotifyWebApiService,
                 private readonly spotifySongsService: SpotifySongsService
                 ) {}
                 
     @Post('createuser/:id')
+    //creates a new user account 
     createUser(@Param('id') id: string) {
         console.log("The users Controller accepted id " + id);
         return this.userService.createUser(id);
     }
 
     @Post (`:email/createSpotifyPlaylist`)
+    //creates Spotify Playlist for a user
     async createSpotifyPlaylist( @Body() spotifyAuthToken: any, @Param('email') email: string ){
         const authToken = spotifyAuthToken.token;
         const spotifyId = await this.spotifySongsService.getSpotifyId(email)
@@ -28,6 +29,7 @@ export class UsersController {
     }
 
     @Put(':id/addSpotifyId')
+    //Adds a Spotify Id to a User account 
     async addSpotifyIdtoUser(@Body() spotifyAuthToken: any, @Param('id') email: string){
         const authToken = spotifyAuthToken.token
         const spotifyId = await this.spotifyWebApi.getSpotifyId(authToken)
