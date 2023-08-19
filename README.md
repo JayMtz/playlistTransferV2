@@ -35,7 +35,7 @@
 
 
 ### END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP SERVICES
-    ### Call to create a new user
+     //Call to create a new user
         POST
         http://localhost:3000/users/createuser/NEW_USER_EMAIL
 
