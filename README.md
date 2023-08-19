@@ -22,10 +22,10 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Description
 
-This is Built using NestJS
-The following Controllers handle routings and are the main files to look at to view the end point functions
+### This is Built using NestJS
+### The following Controllers handle routings and are the main files to look at to view the end point functions
     -Users Controller
         src/users/users.controller.ts
     -Spotify Songs Controller
@@ -34,8 +34,8 @@ The following Controllers handle routings and are the main files to look at to v
         src/apple-music-songs/apple-music-songs.controller.ts
 
 
-END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP SERVICES
-    //Call to create a new user
+### END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP SERVICES
+    ### Call to create a new user
         POST
         http://localhost:3000/users/createuser/NEW_USER_EMAIL
 
@@ -83,7 +83,7 @@ END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP
         DELETE
         http://localhost:3000/users/USER_EMAIL
 
-END POINTS TO MANIPULATE USERS SPOTIFY SONGS DATA
+### END POINTS TO MANIPULATE USERS SPOTIFY SONGS DATA
 
     //Add Spotify Song(s) to a user
         POST
@@ -122,7 +122,7 @@ END POINTS TO MANIPULATE USERS SPOTIFY SONGS DATA
             ]
 
 
-END POINTS TO MANIPULATE USERS APPLE SONGS DATA
+### END POINTS TO MANIPULATE USERS APPLE SONGS DATA
     //Add Apple Music Song(s) for a User
         @POST
         http://localhost:3000/appleMusicSongs/addAppleSongs/USER_EMAIL
