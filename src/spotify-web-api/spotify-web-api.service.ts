@@ -31,7 +31,7 @@ export class SpotifyWebApiService {
         const playlistDescription = 'Your Songs from Apple Music';
 
         try {
-            const response = await fetch(`https://api.spotify.com/v1/users/1280330870/playlists`, {
+            const response = await fetch(`https://api.spotify.com/v1/users/${spotifyId}/playlists`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${authToken}`,
