@@ -5,7 +5,13 @@ USER TABLE
 
     //Add a Spotify Id to a user
         PUT
-        http://localhost:3000/users/USER_EMAIL/addSpotifyId/SPOTIFY_ID
+        http://localhost:3000/users/USER_EMAIL/addSpotifyId
+        (accepts the following JSON object)
+        (must be valid Spotfy Auth token)
+         {
+            "token": "1234459"
+        }
+        
 
     //Add a Apple Music Id to a user 
         PUT
@@ -104,3 +110,19 @@ APPLE MUSIC SONGS TABLE
                     "appleMusicSongArtist": "Jimmy Eat World"
                 }
             ]
+
+
+SPOTIFY WEB API END POINTS
+    //get signed in users Spotify Id
+     http://localhost:3000/spotifyWebApi/getSpotifyId
+     (accepts the following JSON object) ex:
+        {
+            "token": "1234459"
+        }
+
+    //gets sign in users Spotify ID and adds it to users table in database
+
+
+
+
+

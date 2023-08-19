@@ -8,7 +8,7 @@ export class UsersService {
     host: 'localhost',
     user: 'root',
     password: '1194',
-    database: 'Users',
+    database: 'playlistTransfer',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
@@ -18,19 +18,17 @@ export class UsersService {
   async createUser(id): Promise<any> {
     const connection = await this.pool.getConnection();
     const [result] = await connection.query(
-      `INSERT INTO users (email, spotifyId, AppleMusicId) VALUES (?, NULL, NULL)`,
+      `INSERT INTO users (email, spotifyId, appleMusicId) VALUES (?, NULL, NULL)`,
       [id],
     );
     connection.release();
     return { message: "created user from User service with the username of " + id };
   }
 
-  async addSpotifyId(spotifyId, id): Promise<any> {
+  async addSpotifyId(spotifyId, email): Promise<any> {
     const connect = await this.pool.getConnection();
-    const query1 = 'UPDATE users SET SpotifyId = ? WHERE email = ?';
-    //const query2 = 'INSERT INTO spotifySongs (spotifyId, spotifySongName, spotifySongArtist) VALUES (?, NULL, NULL)'
-    const [result] = await connect.query(query1, [spotifyId, id]);
-    //const [result2] = await connect.query(query2, [spotifyId]);
+    const query1 = 'UPDATE users SET spotifyId = ? WHERE email = ?';
+    const [result] = await connect.query(query1, [spotifyId, email]);
     connect.release(); // Release the database connection
     return [result];
   }
