@@ -19,8 +19,8 @@ export class UsersController {
         return this.userService.createUser(id);
     }
 
-    @Post (`:email/createPlaylist`)
-    async createPlaylist( @Body() spotifyAuthToken: any, @Param('email') email: string ){
+    @Post (`:email/createSpotifyPlaylist`)
+    async createSpotifyPlaylist( @Body() spotifyAuthToken: any, @Param('email') email: string ){
         const authToken = spotifyAuthToken.token;
         const spotifyId = await this.spotifySongsService.getSpotifyId(email)
         return this.spotifyWebApi.createPlaylist(authToken, spotifyId)
@@ -28,7 +28,7 @@ export class UsersController {
     }
 
     @Put(':id/addSpotifyId')
-    async addSpotifyId(@Body() spotifyAuthToken: any, @Param('id') email: string){
+    async addSpotifyIdtoUser(@Body() spotifyAuthToken: any, @Param('id') email: string){
         const authToken = spotifyAuthToken.token
         console.log(`Adding Spotify id to user ${email}`)
         console.log(`Using Auth token: ${authToken}`)
