@@ -33,6 +33,14 @@ export class UsersService {
     return [result];
   }
 
+  async getSpotifyId(id): Promise <string>{
+    const connect = await this.pool.getConnection();
+    const query = 'SELECT spotifyId FROM users WHERE email = ?';
+    const [result] = await connect.query(query, [id]);
+    connect.release();
+    return result[0].spotifyId;
+ }
+
   async addAppleMusicIdToUser(appleMusicId, id): Promise<any> {
     const connect = await this.pool.getConnection();
     const query = 'UPDATE users SET AppleMusicId = ? WHERE EMAIL = ?';

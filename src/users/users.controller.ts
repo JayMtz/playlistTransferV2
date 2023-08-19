@@ -37,21 +37,18 @@ export class UsersController {
         return this.userService.addSpotifyIdToUser(spotifyId, email)
     }
 
-    @Put(':id/addAppleMusicId/:appleMusicId')
-    addAppleMusicIdToUser(@Param('appleMusicId') appleMusicId: string, @Param('id') id: string){
-        console.log('performing put addAppleMusicId with apple music id ' + appleMusicId + ' and email ' + id);
-        return this.userService.addAppleMusicIdToUser(appleMusicId, id);
+    @Put(':email/addAppleMusicId/:appleMusicId')
+    addAppleMusicIdToUser(@Param('appleMusicId') appleMusicId: string, @Param('email') email: string){
+        return this.userService.addAppleMusicIdToUser(appleMusicId, email);
     }
     
     @Get('returnAllUsers')
     getAllUsers(){
-        console.log('all users returned')
         return this.userService.returnAllUsers();
     }
-    @Delete('/:id')
-    deleteAllUsers(@Param('id') id: string){
-        console.log('user ' + id + ' is removed')
-        return this.userService.deleteUser(id);
+    @Delete('/:email')
+    deleteAllUsers(@Param('email') email: string){
+        return this.userService.deleteUser(email);
     }
     
 }

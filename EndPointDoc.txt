@@ -1,3 +1,12 @@
+This is Built using NestJS
+The following Controllers handle routings and are the main files to look at to view the end point functions
+    -Users Controller
+        src/users/users.controller.ts
+    -Spotify Songs Controller
+        src/spotify-songs/spotify-songs.controller.ts
+    -Apple Music Songs Controller
+        src/apple-music-songs/apple-music-songs.controller.ts
+
 
 END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP SERVICES
     //Call to create a new user
@@ -9,10 +18,19 @@ END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP
         http://localhost:3000/users/USER_EMAIL/addSpotifyId
         (accepts the following JSON object)
         (must be valid Spotfy Auth token)
-         {
+        {
             "token": "1234459"
         }
         
+    //Create a Spotify Playlist for a user
+     @Post
+     http://localhost:3000/users/USER_EMAIL/createSpotifyPlaylist
+     (accepts the following JSON object)
+        (must be valid Spotfy Auth token)
+        {
+            "token": "1234459"
+        }
+
 
     //Add a Apple Music Id to a user 
         PUT
