@@ -1,4 +1,5 @@
-USER TABLE
+
+END POINTS TO CREATE/DELTE USERS AND USERS ACCOUNT INFO & INTERACT WITH USER APP SERVICES
     //Call to create a new user
         POST
         http://localhost:3000/users/createuser/NEW_USER_EMAIL
@@ -38,7 +39,7 @@ USER TABLE
         DELETE
         http://localhost:3000/users/USER_EMAIL
 
-SPOTIFY SONGS TABLE
+END POINTS TO MANIPULATE USERS SPOTIFY SONGS DATA
 
     //Add Spotify Song(s) to a user
         POST
@@ -77,7 +78,7 @@ SPOTIFY SONGS TABLE
             ]
 
 
-APPLE MUSIC SONGS TABLE
+END POINTS TO MANIPULATE USERS APPLE SONGS DATA
     //Add Apple Music Song(s) for a User
         @POST
         http://localhost:3000/appleMusicSongs/addAppleSongs/USER_EMAIL
@@ -112,15 +113,6 @@ APPLE MUSIC SONGS TABLE
             ]
 
 
-SPOTIFY WEB API END POINTS
-    //get signed in users Spotify Id
-     http://localhost:3000/spotifyWebApi/getSpotifyId
-     (accepts the following JSON object) ex:
-        {
-            "token": "1234459"
-        }
-
-    //gets sign in users Spotify ID and adds it to users table in database
 
 
 
