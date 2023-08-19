@@ -12,6 +12,8 @@ export class UsersController {
                 private readonly spotifySongsService: SpotifySongsService
                 ) {}
                 
+    //User Accounts are tracked by a Email based ID
+
     @Post('createuser/:id')
     //creates a new user account 
     createUser(@Param('id') id: string) {
