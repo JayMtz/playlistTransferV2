@@ -14,11 +14,10 @@ export class UsersController {
                 
     //User Accounts are tracked by a Email based ID
 
-    @Post('createuser/:id')
+    @Post('createuser/:email')
     //creates a new user account 
-    createUser(@Param('id') id: string) {
-        console.log("The users Controller accepted id " + id);
-        return this.userService.createUser(id);
+    createUser(@Param('email') email: string) {
+        return this.userService.createUser(email);
     }
 
     @Post (`:email/createSpotifyPlaylist`)
