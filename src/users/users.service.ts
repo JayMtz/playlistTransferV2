@@ -25,7 +25,7 @@ export class UsersService {
     return { message: "created user from User service with the username of " + id };
   }
 
-  async addSpotifyId(spotifyId, email): Promise<any> {
+  async addSpotifyIdToUser(spotifyId, email): Promise<any> {
     const connect = await this.pool.getConnection();
     const query1 = 'UPDATE users SET spotifyId = ? WHERE email = ?';
     const [result] = await connect.query(query1, [spotifyId, email]);
@@ -33,7 +33,7 @@ export class UsersService {
     return [result];
   }
 
-  async addAppleMusicId(appleMusicId, id): Promise<any> {
+  async addAppleMusicIdToUser(appleMusicId, id): Promise<any> {
     const connect = await this.pool.getConnection();
     const query = 'UPDATE users SET AppleMusicId = ? WHERE EMAIL = ?';
     const [result] = await connect.query(query, [appleMusicId, id]);

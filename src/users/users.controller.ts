@@ -30,17 +30,14 @@ export class UsersController {
     @Put(':id/addSpotifyId')
     async addSpotifyIdtoUser(@Body() spotifyAuthToken: any, @Param('id') email: string){
         const authToken = spotifyAuthToken.token
-        console.log(`Adding Spotify id to user ${email}`)
-        console.log(`Using Auth token: ${authToken}`)
         const spotifyId = await this.spotifyWebApi.getSpotifyId(authToken)
-        console.log(`associating spotifyId: ${spotifyId} to account ${email}`)
-        return this.userService.addSpotifyId(spotifyId, email)
+        return this.userService.addSpotifyIdToUser(spotifyId, email)
     }
 
     @Put(':id/addAppleMusicId/:appleMusicId')
-    addAppleMusicId(@Param('appleMusicId') appleMusicId: string, @Param('id') id: string){
+    addAppleMusicIdToUser(@Param('appleMusicId') appleMusicId: string, @Param('id') id: string){
         console.log('performing put addAppleMusicId with apple music id ' + appleMusicId + ' and email ' + id);
-        return this.userService.addAppleMusicId(appleMusicId, id);
+        return this.userService.addAppleMusicIdToUser(appleMusicId, id);
     }
     
     @Get('returnAllUsers')
