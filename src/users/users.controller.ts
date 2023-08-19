@@ -10,6 +10,7 @@ export class UsersController {
     constructor(private readonly userService: UsersService,
                 private readonly spotifyWebApi: SpotifyWebApiService
                 ) {}
+                
     @Post('createuser/:id')
     createUser(@Param('id') id: string) {
         console.log("The users Controller accepted id " + id);
@@ -18,8 +19,10 @@ export class UsersController {
 
     @Put(':id/addSpotifyId')
     async addSpotifyId(@Body() spotifyAuthToken: any, @Param('id') email: string){
-        console.log('performing  addSpotifyID with Spotify Auth token: ' + spotifyAuthToken.token  +  ' and email: ' + email)
-        const spotifyId = await this.spotifyWebApi.getSpotifyId(spotifyAuthToken.token)
+        const authToken = spotifyAuthToken.token
+        console.log(`Adding Spotify id to user ${email}`)
+        console.log(`Using Auth token: ${authToken}`)
+        const spotifyId = await this.spotifyWebApi.getSpotifyId(authToken)
         console.log(`associating spotifyId: ${spotifyId} to account ${email}`)
         return this.userService.addSpotifyId(spotifyId, email)
     }
