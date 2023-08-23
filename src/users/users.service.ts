@@ -32,14 +32,7 @@ export class UsersService {
     connect.release(); // Release the database connection
     return [result];
   }
-
-  async getSpotifyId(id): Promise <string>{
-    const connect = await this.pool.getConnection();
-    const query = 'SELECT spotifyId FROM users WHERE email = ?';
-    const [result] = await connect.query(query, [id]);
-    connect.release();
-    return result[0].spotifyId;
- }
+  
 
   async addAppleMusicIdToUser(appleMusicId, id): Promise<any> {
     const connect = await this.pool.getConnection();

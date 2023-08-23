@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { error } from 'console';
+import { response } from 'express';
 import fetch from 'node-fetch';
 
 @Injectable()
@@ -54,4 +56,62 @@ export class SpotifyWebApiService {
             throw new Error('Bad auth token maybe?');
         }
     }
+
+    async getSongUris(songs, authToken) {
+        console.log(`Gathering Spotify Song Uris from Users Apple Music Songs`)
+        const result = [];
+        const batchSize = 5;
+        // Loop through the songs in batches
+        for (let i = 0; i < songs.length; i += batchSize) {
+            // Slice the songs into a batch of the specified size
+            const batch = songs.slice(i, i + batchSize);
+            // Create an array of asynchronous requests for each song in the batch
+            const requests = batch.map(async (song) => {
+                // Construct the search query based on song name and artist
+                const searchQuery = encodeURIComponent(`${song.appleMusicSongName} ${song.appleMusicSongArtist}`);
+                
+                // Make a request to the Spotify API
+                const response = await fetch(`https://api.spotify.com/v1/search?q=${searchQuery}&type=track`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    },
+                });
+    
+                // Process the API response
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.tracks.items.length > 0) {
+                        console.log(data.tracks.items[0].uri)
+                        return data.tracks.items[0].uri; // Return the URI of the first matching track
+                    } else {
+                        throw new Error(`No matching track found for ${song.appleMusicSongName} by ${song.appleMusicSongArtist}`);
+                    }
+                } else {
+                    throw new Error('Failed to fetch data from Spotify API.');
+                }
+            });
+    
+            try {
+                // Wait for all requests in the batch to complete
+                const batchResult = await Promise.all(requests);
+    
+                // Add the batch results to the final result array
+                result.push(...batchResult);
+                
+            } catch (error) {
+                throw new Error(`An error occurred: ${error.message}`);
+            }
+        }
+    
+        // Return the aggregated result
+        return result;
+    }
+    
+    
+    
+
+   
 }
+
+

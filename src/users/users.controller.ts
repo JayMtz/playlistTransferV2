@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UsersService } from './users.service';
 import { SpotifyWebApiService } from 'src/spotify-web-api/spotify-web-api.service';
 import { SpotifySongsService } from 'src/spotify-songs/spotify-songs.service';
+import { AppleMusicSongsService } from 'src/apple-music-songs/apple-music-songs.service';
 
 
 
@@ -9,7 +10,8 @@ import { SpotifySongsService } from 'src/spotify-songs/spotify-songs.service';
 export class UsersController {
     constructor(private readonly userService: UsersService,
                 private readonly spotifyWebApi: SpotifyWebApiService,
-                private readonly spotifySongsService: SpotifySongsService
+                private readonly spotifySongsService: SpotifySongsService,
+                private readonly appleMusicSongsService: AppleMusicSongsService
                 ) {}
                 
     //User Accounts are tracked by a Email based ID
@@ -29,6 +31,19 @@ export class UsersController {
 
     }
 
+   @Post(`:email/uploadSongsToSpotify`)
+   //uploads songs to new spotify playlist for a user
+    async uploadSongsToSpotify( @Body() spotifyAuthToken: any, @Param('email') email: string){
+    const authToken = spotifyAuthToken.token
+    const appleMusicId = await this.appleMusicSongsService.getAppleMusicId(email)
+    const spotifyId = await this.spotifySongsService.getSpotifyId(email)
+    const appleMusicsongs = await this.appleMusicSongsService.getAppleSongs(appleMusicId)
+    const songUris =  await this.spotifyWebApi.getSongUris(appleMusicsongs, authToken)
+    return songUris
+   }
+
+
+    
     @Put(':email/addSpotifyId')
     //Adds a Spotify Id to a User account 
     async addSpotifyIdtoUser(@Body() spotifyAuthToken: any, @Param('email') email: string){

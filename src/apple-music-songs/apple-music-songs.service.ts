@@ -14,10 +14,10 @@ export class AppleMusicSongsService {
     port: 3306, // Add port number for MySQL
   });
 
-  async getAppleMusicId(id) {
+  async getAppleMusicId(email) {
     const connect = await this.pool.getConnection();
     const query = 'SELECT appleMusicId FROM users WHERE email = ?';
-    const [result] = await connect.query(query, id);
+    const [result] = await connect.query(query, email);
     connect.release();
     return result[0].appleMusicId;
   }

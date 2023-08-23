@@ -6,10 +6,7 @@ export class AppleMusicSongsController {
     constructor(private readonly AppleMusicSongsService: AppleMusicSongsService) {}
 
     @Post('addAppleSongs/:id')
-    async addSongData(
-        @Param('id') id: string,
-        @Body() songs: any[]): Promise <any>
-    {
+    async addSongData( @Param('id') id: string, @Body() songs: any[]): Promise <any>{
         const appleMusicId = await this.AppleMusicSongsService.getAppleMusicId(id);
         return this.AppleMusicSongsService.addAppleMusicSongs(appleMusicId, songs);
     }
