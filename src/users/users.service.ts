@@ -27,8 +27,8 @@ export class UsersService {
 
   async addSpotifyIdToUser(spotifyId, email): Promise<any> {
     const connect = await this.pool.getConnection();
-    const query1 = 'UPDATE users SET spotifyId = ? WHERE email = ?';
-    const [result] = await connect.query(query1, [spotifyId, email]);
+    const query = 'UPDATE users SET spotifyId = ? WHERE email = ?';
+    const [result] = await connect.query(query, [spotifyId, email]);
     connect.release(); // Release the database connection
     return [result];
   }

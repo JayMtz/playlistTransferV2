@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { error } from 'console';
-import { response } from 'express';
+import { json, response } from 'express';
 import fetch from 'node-fetch';
 
 @Injectable()
@@ -57,7 +57,7 @@ export class SpotifyWebApiService {
         }
     }
 
-    async getSongUris(songs, authToken) {
+    async getSongUris(authToken, songs) {
         console.log(`Gathering Spotify Song Uris from Users Apple Music Songs`)
         const result = [];
         const batchSize = 5;
@@ -68,6 +68,7 @@ export class SpotifyWebApiService {
             // Create an array of asynchronous requests for each song in the batch
             const requests = batch.map(async (song) => {
                 // Construct the search query based on song name and artist
+                
                 const searchQuery = encodeURIComponent(`${song.appleMusicSongName} ${song.appleMusicSongArtist}`);
                 
                 // Make a request to the Spotify API
@@ -82,7 +83,8 @@ export class SpotifyWebApiService {
                 if (response.ok) {
                     const data = await response.json();
                     if (data.tracks.items.length > 0) {
-                        console.log(data.tracks.items[0].uri)
+                        console.log(`${data.tracks.items[0].uri} : ${song.appleMusicSongArtist} - ${song.appleMusicSongName}`)
+
                         return data.tracks.items[0].uri; // Return the URI of the first matching track
                     } else {
                         throw new Error(`No matching track found for ${song.appleMusicSongName} by ${song.appleMusicSongArtist}`);
@@ -90,13 +92,14 @@ export class SpotifyWebApiService {
                 } else {
                     throw new Error('Failed to fetch data from Spotify API.');
                 }
+                
             });
-    
             try {
                 // Wait for all requests in the batch to complete
                 const batchResult = await Promise.all(requests);
     
                 // Add the batch results to the final result array
+               
                 result.push(...batchResult);
                 
             } catch (error) {
@@ -108,7 +111,39 @@ export class SpotifyWebApiService {
         return result;
     }
     
+    async getUserPlaylistId(authToken, spotifyId){
+        //console.log(authToken)
+        const response = await fetch(`https://api.spotify.com/v1/users/${spotifyId}/playlists`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${authToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                })
+        const data = await response.json()
+        
+
+    const playlistName = 'Apple Music Songs'
+       const playlistId =  data.items.find(item => item.name === playlistName);
+        return playlistId.id
+       
+    }
+
+    async uploadSongsToPlaylist(authToken, playlistId, songUris){
+        console.log(`Now uploading songs..`)
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({uris: songUris})
+        })
+        const data = await response.json();
+        return data;
+    }
     
+
     
 
    
